@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+	int data;
+	struct node *next;
+};
+
+void createNode(struct node **head,int data)
+{
+	struct node *temp = (struct node*)malloc(sizeof(struct node));
+	temp->data = data;  
+	temp->next = *head;  
+	*head = temp; 
+}
+
+void circList(struct node **head)
+{
+	struct node *last = *head;
+	while(last->next != NULL){
+		last = last->next;
+	} 
+	last->next = *head;
+}
+
+void evenSum(struct node *head)
+{
+	int sum = 0;
+	int flag = 0;
+	struct node *last = head;
+	while(last != head || flag==0) {
+		last = last->next;
+		flag = 1;
+		if((last->data%2)==0){
+			sum += last->data;
+		}
+	}
+	printf("Sum : %d",sum) ;
+}
+
+int main()
+{
+	struct node *head = NULL;
+	int n;
+	int x;
+	int i;
+	printf("Enter Size of List = ");
+	scanf("%d",&n);
+	for(i = 0; i < n; i++){
+		scanf("%d",&x);
+		createNode(&head,x);
+	}
+	circList(&head);
+	evenSum(head);	
+}
