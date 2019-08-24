@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+	int data;
+	struct node *next;
+};
+void append(struct node **head,int val){
+	struct node *temp=(struct node*) malloc(sizeof(struct node));
+	struct node *last=*head;
+	temp->data=val;
+	temp->next=NULL;
+	if(*head==NULL) {
+		*head=temp;
+		return;
+	}
+	while(last->next!=NULL) last=last->next;
+	last->next=temp;
+	return;
+}
+struct node *reverse (struct node *head, int k) 
+{ 
+    struct node* current = head; 
+    struct node* post = NULL; 
+    struct node* prev = NULL; 
+    int count = 0;    
+    while (current != NULL && count < k) 
+    { 
+        post  = current->next; 
+        current->next = prev; 
+        prev = current; 
+        current = post; 
+        count++; 
+    } 
+      if (post !=  NULL) 
+       head->next = reverse(post, k);  
+    return prev; 
+} 
+void print(struct node *head){
+	printf("\n");
+	while(head!=NULL){
+		printf("%d ",head->data);
+		head=head->next;
+	}
+}
+int main() {
+	int n;
+	scanf("%d",&n);
+	struct node* head=NULL;
+	int i;
+	struct node *temp=(struct node*) malloc(sizeof(struct node));
+	for( i=0;i<n;i++){
+		int val;
+		scanf("%d",&val);
+		append(&head,val);
+	}
+	int k;
+	scanf("%d",&k);
+	head=reverse(head,k);
+	print(head);
+	return 0;
+}
