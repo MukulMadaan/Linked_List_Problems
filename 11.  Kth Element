@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+	int data;
+	struct node *next;
+};
+
+void createNode(struct node **head,int data)
+{
+	struct node *temp = (struct node*)malloc(sizeof(struct node));
+	temp->data = data;  
+	temp->next = *head;  
+	*head = temp; 
+}
+int main()
+{
+	struct node *head = NULL; 
+	int n;
+	int x;
+	int i;
+	int k;
+	int count = 0;
+	printf("Enter Size of List = ");
+	scanf("%d",&n);
+	for(i = 0; i < n; i++){
+		scanf("%d",&x);
+		createNode(&head,x);
+	}
+	printf("Enter Value : ");
+	scanf("%d",&k);
+	while(head != NULL){
+		if(count%3==0){
+			printf("%d->",head->data);
+		}
+		count++;
+		head = head->next;
+	}
+	printf("NULL");
+}
