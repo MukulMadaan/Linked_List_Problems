@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+	int data;
+	struct node *next;
+	struct node *prev;
+};
+
+struct node* createNode(struct node *head,int data) 
+{
+	struct node *temp = (struct temp*)malloc(sizeof(struct node));
+	struct node *traverse = NULL;
+	struct node *back = NULL;
+	if(head == NULL) {
+		temp->data = data;
+		temp->next = traverse;
+		temp->prev = back;
+		head = temp;
+		return head;
+	} else{
+		traverse = head;
+		while(traverse != NULL){
+			back = traverse;
+			//printf(" %d ",traverse->data);
+			traverse = traverse->next;
+		}
+		temp->data = data;
+		temp->prev = back;
+		back->next = temp;
+		temp->next = traverse;
+		return head;
+	}
+}
+
+void printList(struct node *head)
+{
+	struct node* last = NULL;
+	while(head != NULL){
+		last = head;
+		printf("%d ",head->data);
+		head = head->next;
+	}
+}
+
+struct node* smallestDeletion(struct node *head)
+{
+	int smallest;
+	smallest = head->data;
+	struct node* temp = head;
+	struct node *back = NULL; 
+	while(temp->next != NULL) {
+		temp = temp->next;
+		if(temp->data < smallest) {
+			smallest = temp->data;
+		}
+	}
+	temp = head;
+	while(temp->data != smallest) {
+	back = temp;
+	temp = temp->next;
+	}
+	if(temp == head) {
+		temp->next->prev = NULL;
+		head = temp->next;
+		free(temp);
+		return head;
+	} else if(temp->next == NULL){
+		temp->prev->next = NULL;
+		free(temp);
+		return head;
+	} else {
+	back->next = temp->next ;
+	temp->next->prev = back;
+	free(temp);
+	return head;
+	}
+}
+
+int main()
+{
+	struct node *head = NULL; 
+	int n;
+	int x;
+	int i;
+	printf("Enter Size of List = ");
+	scanf("%d",&n);
+	for(i = 0; i < n; i++) {
+		scanf("%d",&x);
+		head = createNode(head,x);
+	}
+	head = smallestDeletion(head);
+	printList(head);
+}
