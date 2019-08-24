@@ -35,16 +35,18 @@ struct node* createNode(struct node *head,int data)
 
 void printList(struct node *head)
 {
+	struct node* last = NULL;
 	while(head != NULL){
+		last = head;
 		printf("%d ",head->data);
 		head = head->next;
 	}
 	
 	printf("\n");
 	
-	while(head != NULL){
-		printf("%d ",head->data);
-		head = head->prev;
+	while(last != NULL){
+		printf("%d ",last->data);
+		last = last->prev;
 	}
 }
 
