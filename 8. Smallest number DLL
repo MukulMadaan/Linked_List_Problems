@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+	int data;
+	struct node *next;
+	struct node *prev;
+};
+
+struct node* createNode(struct node *head,int data) 
+{
+	struct node *temp = (struct temp*)malloc(sizeof(struct node));
+	struct node *traverse = NULL;
+	struct node *back = NULL;
+	if(head == NULL) {
+		temp->data = data;
+		temp->next = traverse;
+		temp->prev = back;
+		head = temp;
+		return head;
+	} else{
+		traverse = head;
+		while(traverse != NULL){
+			back = traverse;
+			//printf(" %d ",traverse->data);
+			traverse = traverse->next;
+		}
+		temp->data = data;
+		temp->prev = back;
+		back->next = temp;
+		temp->next = traverse;
+		return head;
+	}
+}
+
+
+int main()
+{
+	struct node *head = NULL; 
+	int n;
+	int x;
+	int i;
+	printf("Enter Size of List = ");
+	scanf("%d",&n);
+	for(i = 0; i < n; i++) {
+		scanf("%d",&x);
+		head = createNode(head,x);
+	}
+	int smallest;
+	smallest = head->data;
+	while(head->next != NULL)
+	{
+		head = head->next;
+		if(head->data < smallest)
+		smallest = head->data;
+	}
+	printf("Smallest = %d",smallest);
+}
