@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+	int data;
+	struct node *next;
+};
+
+void append(struct node **head,int val){
+	struct node *temp=(struct node*) malloc(sizeof(struct node));
+	struct node *last=*head;
+	temp->data=val;
+	temp->next=NULL;
+	if(*head==NULL) {
+		*head=temp;
+		return;
+	}
+	while(last->next!=NULL) last=last->next;
+	last->next=temp;
+	return;
+}
+
+void palindrome(struct node* head,int numb)
+{
+	struct node* ptr = head;
+	int counter = numb/2;
+	int check = counter;
+	int array[counter];
+	int i;
+	
+	while(counter) {
+		counter--;
+		array[counter] = ptr->data;
+		ptr = ptr->next;
+	}
+	
+	if(numb%2 != 0){
+		ptr = ptr->next;
+	}
+	
+	while(counter < check){
+		if(array[counter] == ptr->data){
+			counter++;
+			ptr = ptr->next;
+		} else
+		break;
+	}
+	
+	if(counter == check)
+	printf("palindrome");
+	else
+	printf("not palindrome");
+	
+}
+
+void print(struct node *head){
+	printf("\n");
+	while(head!=NULL){
+		printf("%d ",head->data);
+		head=head->next;
+	}
+}
+
+int main() {
+	int n;
+	scanf("%d",&n);
+	struct node* head=NULL;
+	int i;
+	int numb = 0;
+	struct node *temp=(struct node*) malloc(sizeof(struct node));
+	for( i=0;i<n;i++){
+		int val;
+		scanf("%d",&val);
+		append(&head,val);
+		numb++;
+	}
+	palindrome(head,numb);
+	return 0;
+}
