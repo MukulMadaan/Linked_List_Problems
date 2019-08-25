@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+	int data;
+	struct node *next;
+};
+
+void append(struct node **head,int val){
+	struct node *temp=(struct node*) malloc(sizeof(struct node));
+	struct node *last=*head;
+	temp->data=val;
+	temp->next=NULL;
+	if(*head==NULL) {
+		*head=temp;
+		return;
+	}
+	while(last->next!=NULL) last=last->next;
+	last->next=temp;
+	return;
+}
+
+void middle(struct node* head)
+{
+	int count = 1;
+	struct node* ptr = head;
+	struct node* postptr = head;
+	while(postptr->next != NULL && postptr->next->next != NULL)
+	{
+		ptr = ptr->next;
+		postptr = postptr->next->next;
+		count++;
+	}
+
+	if(count%2==0)
+	printf("%d",ptr->data);
+	else
+	printf("%d",ptr->next->data);
+}
+
+void print(struct node *head){
+	printf("\n");
+	while(head!=NULL){
+		printf("%d ",head->data);
+		head=head->next;
+	}
+}
+
+int main() {
+	int n;
+	scanf("%d",&n);
+	struct node* head=NULL;
+	int i;
+	struct node *temp=(struct node*) malloc(sizeof(struct node));
+	for( i=0;i<n;i++){
+		int val;
+		scanf("%d",&val);
+		append(&head,val);
+	}
+	middle(head);
+	return 0;
+}
