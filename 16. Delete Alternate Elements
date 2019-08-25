@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+	int data;
+	struct node *next;
+};
+
+void append(struct node **head,int val){
+	struct node *temp=(struct node*) malloc(sizeof(struct node));
+	struct node *last=*head;
+	temp->data=val;
+	temp->next=NULL;
+	if(*head==NULL) {
+		*head=temp;
+		return;
+	}
+	while(last->next!=NULL) last=last->next;
+	last->next=temp;
+	return;
+}
+
+struct node* delAlternate(struct node* head)
+{
+	struct node* prev = head;
+	struct node* current = head->next;
+	while(current->next != NULL && current->next->next != NULL)
+	{
+		prev->next = current->next;
+		free(current);
+		current = prev;
+		prev = current->next;
+		current = current->next->next;
+	}
+	return head;
+}
+
+void print(struct node *head){
+	printf("\n");
+	while(head!=NULL){
+		printf("%d ",head->data);
+		head=head->next;
+	}
+}
+
+int main() {
+	int n;
+	scanf("%d",&n);
+	struct node* head=NULL;
+	int i;
+	struct node *temp=(struct node*) malloc(sizeof(struct node));
+	for( i=0;i<n;i++){
+		int val;
+		scanf("%d",&val);
+		append(&head,val);
+	}
+	head = delAlternate(head);
+	print(head);
+	return 0;
+}
