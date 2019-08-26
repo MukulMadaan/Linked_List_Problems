@@ -1,0 +1,87 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+	int data;
+	int power;
+	struct node *next;
+};
+
+void append(struct node **head,int val,int val1){
+	struct node *temp=(struct node*) malloc(sizeof(struct node));
+	struct node *last=*head;
+	temp->data=val;
+	temp->power=val1;
+	temp->next=NULL;
+	if(*head==NULL) {
+		*head=temp;
+		return;
+	}
+	while(last->next!=NULL) last=last->next;
+	last->next=temp;
+	return;
+}
+
+struct node* polyAdd(struct node *head, struct node *head1)
+{
+	struct node *finalHead = NULL;
+	while(head != NULL || head1 != NULL) {
+	if(head->power == head1->power){
+		append(&finalHead,head->data + head1->data, head->power);
+		head = head->next;
+		head1 = head1->next;
+	} else if(head->power > head1->power) {
+		append(&finalHead,head->data,head->power);
+		head = head->next;
+	} else if(head->power < head1->power) {
+		append(&finalHead,head1->data,head1->power);
+		head1 = head1->next;
+	}
+	}
+	return finalHead;
+}
+
+void print(struct node *head){
+	printf("\n");
+	while(head!=NULL){
+		printf("%dX^%d+",head->data,head->power);
+		head=head->next;
+	}
+	printf("0\n");
+}
+
+int main() {
+	int n;
+	scanf("%d",&n);
+	struct node* head=NULL;
+	struct node* head1=NULL;
+	int i;
+	int numb = 0;
+	struct node *temp=(struct node*) malloc(sizeof(struct node));
+	for( i=0;i<n;i++){
+		int val;
+		int val1;
+		printf("Enter Element : ");
+		scanf("%d",&val);
+		printf("Enter it's power : ");
+		scanf("%d",&val1);
+		append(&head,val,val1);
+	}
+	scanf("%d",&n);
+	for(i = 0;i<n;i++){
+		int val;
+		int val1;
+		printf("Enter Element : ");
+		scanf("%d",&val);
+		printf("Enter it's power : ");
+		scanf("%d",&val1);
+		append(&head1,val,val1);
+	}
+	print(head);
+	print(head1);
+	struct node *finalHead = NULL;
+	finalHead = polyAdd(head,head1);
+	print(finalHead);
+	return 0;
+}
+
